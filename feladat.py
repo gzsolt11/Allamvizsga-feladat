@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pathlib
 
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import train_test_split
@@ -59,10 +60,16 @@ def evaluate_identification_Train_Test(df_train, df_test):
     return score_value
 
 def beolvas():
-    df_easy = pd.read_csv(r'D:\Pythongyakorlas\easy.csv')
-    df_logicalstrong = pd.read_csv(r'D:\Pythongyakorlas\logicalstrong.csv')
-    df_strong = pd.read_csv(r'D:\Pythongyakorlas\strong.csv')
+    fn = pathlib.Path(__file__).parent / 'sources'
+    df_easy = pd.read_csv(fn / 'easy.csv')
+    df_logicalstrong = pd.read_csv(fn / 'logicalstrong.csv')
+    df_strong = pd.read_csv(fn / 'strong.csv')
     return [df_easy,df_logicalstrong,df_strong]
+
+def beolvas2():
+    fn = pathlib.Path(__file__).parent / 'sources/DSL-StrongPasswordData.csv'
+    df_DSL = pd.read_csv(fn)
+    return df_DSL
 
 def kilenc_jellemzo_adat(df_easy,df_logicalstrong,df_strong):
     kilenc_jel = ['meanholdtime','meanpressure','meanfingerarea','meanxaccelaration','meanyaccelaration','meanzaccelaration','velocity','totaltime','totaldistance','user_id']
@@ -83,15 +90,15 @@ def fel1():
     
     table = pd.DataFrame({'Jellemző':["Összes","9"],'Easy':["%0.0f (%0.4f)" % (easy_accuracy*100 , easy_std) ,"%0.0f (%0.4f)" % (easy_kilenc_accuracy*100 , easy_kilenc_std) ] ,'Logicalstrong':["%0.0f (%0.4f)" % (logicalstrong_accuracy*100 , logicalstrong_std) ,"%0.0f (%0.4f)" % (logicalstrong_kilenc_accuracy*100 , logicalstrong_kilenc_std) ] ,'Strong':["%0.0f (%0.4f)" % (strong_accuracy*100 , strong_std) ,"%0.0f (%0.4f)" % (strong_kilenc_accuracy*100 , strong_kilenc_std) ]  })
     print(table)
-    x_axis = [0,1,2]
+    x_axis = [1,2,3]
     y_axis = [easy_accuracy , logicalstrong_accuracy, strong_accuracy]
     y_axis2 = [easy_kilenc_accuracy , logicalstrong_kilenc_accuracy, strong_kilenc_accuracy]
     table2 = pd.DataFrame({"Difficulty":x_axis, "Accuracy":y_axis})
-    sns.lineplot(x ='Difficulty', y='Accuracy', data=table2)
+    sns.barplot(x=table2["Difficulty"],y=table2["Accuracy"])
     plt.show()
 
     table3 = pd.DataFrame({"Difficulty":x_axis, "Accuracy":y_axis2})
-    sns.lineplot(x ='Difficulty', y='Accuracy', data=table3)
+    sns.barplot(x=table3["Difficulty"],y=table3["Accuracy"])
     plt.show()
 
 
@@ -107,21 +114,28 @@ def accuracy_counting(lista):
 
 def fel2():
     df_easy,df_logicalstrong,df_strong = beolvas()
-    lista = [df_easy, df_logicalstrong, df_strong]
-
     
     het_jel = ['meanholdtime','meanpressure','meanfingerarea','meanxaccelaration','meanyaccelaration','meanzaccelaration','velocity','user_id']
     lista2 = [df_easy[het_jel], df_logicalstrong[het_jel], df_strong[het_jel]]
 
-    List = accuracy_counting(lista)
     List2 = accuracy_counting(lista2)
     
 
-    tablazat = pd.DataFrame({"Train":['Easy','Easy','Logicalstrong','Logicalstrong','Strong','Strong'], "Test":['Logicalstrong','Strong','Easy','Strong','Easy','Logicalstrong'], "Accuracy(%)":[List[0],List[1],List[2],List[3],List[4],List[5]], "Accuracy_het_jel(%)":[List2[0],List2[1],List2[2],List2[3],List2[4],List2[5]]})
+    tablazat = pd.DataFrame({"Train":['Easy','Easy','Logicalstrong','Logicalstrong','Strong','Strong'], "Test":['Logicalstrong','Strong','Easy','Strong','Easy','Logicalstrong'], "Accuracy_het_jel(%)":[List2[0],List2[1],List2[2],List2[3],List2[4],List2[5]]})
     print(tablazat)
 
+def fel3():
+    df_DSL = beolvas2()
+
+    DSL_3_accuracy, DSL_3_std = evaluate_identification_CV(df_DSL,3)
+    DSL_accuracy, DSL_std = evaluate_identification_CV(df_DSL,10)
+    
+    table = pd.DataFrame({'index':['Összes'],'DSL_3_folds':["%0.0f (%0.4f)" % (DSL_3_accuracy*100 , DSL_3_std)] ,'DSL_10_folds':["%0.0f (%0.4f)" % (DSL_accuracy*100 , DSL_std)]})
+    print(table)
+
 def main():
-    fel1()
-    fel2()
+    # fel1()
+    # fel2()
+    fel3()
 
 main()
