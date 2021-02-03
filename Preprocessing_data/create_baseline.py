@@ -78,13 +78,16 @@ def parse_data(read_path, output_path):
                     break
                 try:
                     # Calculating the Holdtime1, holdtime2, PressPress, ReleasePress times from the rows
+                    key1 = key_with_times[i][0]
+                    key2 = key_with_times[i+1][0]
                     H1 = int(key_with_times[i][2]) - int(key_with_times[i][1])
                     H2 = int(key_with_times[i+1][2]) - int(key_with_times[i+1][1])
                     PP = int(key_with_times[i+1][1]) - int(key_with_times[i][1])
                     RP = int(key_with_times[i+1][1]) - int(key_with_times[i][2])
                     # If the PP and RP looks accurate we add it to the output
                     if PP < 1000 and abs(RP) < 1000:
-                        output.append((H1,H2, PP, RP, session_id, keyboard_id, task_id, user_id))
+                        keyDistance = np.array(index_2d(KEYS, key1)) - np.array(index_2d(KEYS, key2))
+                        output.append((keyDistance[0],H1,H2, PP, RP, session_id, keyboard_id, task_id, user_id))
                 except:
                     pass
         
@@ -98,14 +101,18 @@ def parse_data(read_path, output_path):
     try:
         with open(write_file, "a") as file:
             for entry in output:
-                file.write(str(entry[0]) + "," + str(entry[1]) + "," + str(entry[2]) + "," + str(entry[3]) + "," + str(entry[4]) + "," + str(entry[5]) +"," + str(entry[6]) + "," + str(entry[7]) + "\n")
+                file.write(str(entry[0]) + "," + str(entry[1]) + "," + str(entry[2]) + "," + str(entry[3]) + "," + str(entry[4]) + "," + str(entry[5]) +"," + str(entry[6]) + "," + str(entry[7]) +"," + str(entry[8]) + "\n")
             file.close()
     except:
         with open(write_file, "w+") as file:
             for entry in output:
-                file.write(str(entry[0]) + "," + str(entry[1]) + "," + str(entry[2]) + "," + str(entry[3]) + "," + str(entry[4]) + "," + str(entry[5]) +"," + str(entry[6]) + "," + str(entry[7]) + "\n")
+                file.write(str(entry[0]) + "," + str(entry[1]) + "," + str(entry[2]) + "," + str(entry[3]) + "," + str(entry[4]) + "," + str(entry[5]) +"," + str(entry[6]) + "," + str(entry[7]) +"," + str(entry[8]) + "\n")
             file.close()
         
+def index_2d(myList, v):
+    for i, x in enumerate(myList):
+        if v in x:
+            return (i, x.index(v))
        
     
 def main():

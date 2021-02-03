@@ -1,5 +1,5 @@
 # call python fila as
-# python create_baseline_sequence.py processed_data/baseline.csv input_folder length_of_samples
+# python create_baseline_sequence.py processed_data/filename output_folder length_of_samples
 
 import pandas as pd
 import pathlib
@@ -35,7 +35,7 @@ def create_sequence(input_path,output_path,sample_length):
         for i in range(0,sample_length):
             if same_user:
                 line = file.readline()
-                splitted_line = line.split(',')[:4]
+                splitted_line = line.split(',')[:6]
             else:
                 same_user = True
             if( i == 0 ):
@@ -63,17 +63,19 @@ def create_sequence(input_path,output_path,sample_length):
         # In the chunk list we take the Holdtime1 Holdtime2 PressPress and ReleasePress and concatenate them together
         chunk = []
 
+        keyDistance = []
         H1 = []
         H2 = []
         PP = []
         RP = []
         for i in range(sample_length):
-            H1 = H1 + [sor[i][0]]
-            H2 = H2 + [sor[i][1]]
-            PP = PP + [sor[i][2]]
-            RP = RP + [sor[i][3]]
+            keyDistance = keyDistance + [sor[i][0]]
+            H1 = H1 + [sor[i][1]]
+            H2 = H2 + [sor[i][2]]
+            PP = PP + [sor[i][3]]
+            RP = RP + [sor[i][4]]
         
-        chunk = H1 + H2 + PP + RP + [user.split('\n')[0]]
+        chunk = keyDistance + H1 + H2 + PP + RP + [user.split('\n')[0]]
         
         # Adding the chunk to the output list
         output.append(tuple(chunk))
@@ -90,8 +92,8 @@ def create_sequence(input_path,output_path,sample_length):
         with open(write_file, "a") as file:
             for entry in output:
                 outputstring = ""
-                for i in range(sample_length*4+1):
-                    if (i < sample_length*4):
+                for i in range(sample_length*5+1):
+                    if (i < sample_length*5):
                         # Concatenating the elements of H1, H2, PP, RP
                         outputstring = outputstring + str(entry[i]) +","
                     else:
@@ -104,8 +106,8 @@ def create_sequence(input_path,output_path,sample_length):
         with open(write_file, "w+") as file:
             for entry in output:
                 outputstring = ""
-                for i in range(sample_length*4+1):
-                    if (i < sample_length*4):
+                for i in range(sample_length*5+1):
+                    if (i < sample_length*5):
                         # Concatenating the elements of H1, H2, PP, RP
                         outputstring = outputstring + str(entry[i]) +","
                     else:

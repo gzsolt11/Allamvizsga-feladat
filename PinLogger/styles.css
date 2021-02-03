@@ -1,0 +1,240 @@
+body{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 105vh;
+    width: 100vw;
+    outline: hidden;
+    margin:0;
+    background-image: url("./src/background.jpg");
+    background-size: 100%;
+    background-attachment: fixed;
+    color: white;
+} 
+
+#buttons{
+    display:grid;
+    grid-template-columns: auto auto auto;
+    height: 250px;
+    width: 300px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+#button0{
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.button{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   border: solid white 0.5px;
+   font-size:xx-large;
+   font-weight: bold;
+   color: white;
+}
+
+.button:active{
+    background-color: white;
+    color: 02BDE3;
+}
+
+#pinAnswer{
+    pointer-events: none;
+    margin-top: 10px;
+    width: 90%;
+    height: 30px;
+    text-align: center;
+    color:white;
+    font-size: x-large;
+    background-color: #02BDE3;
+    border: none;
+}
+
+#titleBlock{
+    margin-top: 50px;
+}
+
+#pincode{
+    font-size: x-large;
+    margin: 0;
+    color:#02BDE3;
+}
+
+#title{
+    margin: 0;
+    display: inline;
+}
+
+#counter{
+    display: inline;
+    color:#02BDE3;
+    font-size: x-large;
+}
+
+
+@keyframes success {
+    0% {background-color: #02BDE3}
+    30%, 70% {background-color: #00C721;}
+    80% {background-color: #02BDE3;}
+}
+
+@keyframes fail {
+    0% {background-color: #02BDE3}
+    30%, 70% {background-color: red;}
+    80% {background-color: #02BDE3;}
+}
+
+.success{
+    animation: success 300ms ease-in-out 0s;
+}
+
+.fail{
+    animation: fail 300ms ease-in-out 0s;
+}
+
+#popUpBlock{
+    position: absolute;
+    width: 100%;
+    height: 120vh;
+    background-color: rgba(0, 0, 0, 0.555);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+}
+
+#popUpWindow{
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    background-color: #034c5a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#popUpTitle{
+    margin-top: 40px;
+    color: #02BDE3;
+    font-size: large;
+    display: block;
+    width: 100%;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+#popUpBody{
+    margin-top: 20px;
+}
+
+#popUpInstruction{
+    color: white;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#emailAdress{
+    margin-top: 10px;
+    color: #02BDE3;
+    font-size: medium;
+}
+
+#downloadButton{
+    background-color: #02BDE3;
+    color: white;
+    border: solid black 1px;
+    width: 50%;
+    height: 40px;
+    margin-top: 30px;
+}
+
+#copyEmail{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#copyImage{
+    display: flex;
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+    background-color: #02BDE3;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+#copyImage img{
+    width: 35px;
+    height: 35px;
+}
+
+#toastMessage, #toastMessageForMobile{
+    background-color: rgb(31, 31, 31);
+    position: absolute;
+    bottom: 30px;
+    height: 50px;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+}
+
+#toastMessage.show, #toastMessageForMobile.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  @-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+
+#myEmail{
+    left: 5000px;
+    pointer-events: none;
+}
+
+.sourceCode{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#sourceCodeLink{
+    text-decoration: none; 
+    color: white;
+}
+
+.blockPopUp{
+    pointer-events: none;
+}
