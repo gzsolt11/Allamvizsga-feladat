@@ -1,8 +1,7 @@
-var outputList = [] // [ [number, pressing timestamp, releasing timestamp, pressure],... ]
+var outputList = [] // [ [number, pressing timestamp, releasing timestamp],... ]
 var pressedNumber = [];
 var pressingTimestamp = [];
 var releasingTimestamp = [];
-var pressure = [];
 var fingerarea = [];
 var keydownMutex = false;
 var keyupMutex = true;
@@ -86,13 +85,6 @@ function textChangeListener(e){
 // At pressing a button the touchevent properties will be added to certain lists
 function keydown(event){
     if(!keydownMutex){
-        console.log(event);
-        for (var i=0; i < event.targetTouches.length; i++) {
-            if(event.targetTouches[i].force == 1){
-                askForMobile();
-            }
-            pressure.push(event.targetTouches[i].force);
-          }
         keydownMutex = true;
         keyupMutex = false;
         pressingTimestamp.push(Date.now());
@@ -127,19 +119,18 @@ function resetLists(){
     pressingTimestamp = [];
     releasingTimestamp = [];
     pressedNumber = [];
-    pressure = [];
 }
 
 // Merge the lists into a big list 
 function addListsToOutput(){
     for(var i = 0; i < pressedNumber.length; ++i){
-        outputList.push([parseInt(pressedNumber[i]),pressingTimestamp[i],releasingTimestamp[i],pressure[i]]);
+        outputList.push([parseInt(pressedNumber[i]),pressingTimestamp[i],releasingTimestamp[i]]);
     }
 }
 
 // Converts our output list into a csv list
 function convertListToCSV(list){
-    var CSVRows = ["key,pressTime,releaseTime,pressure"];
+    var CSVRows = ["key,pressTime,releaseTime"];
     for(var i = 0; i < list.length; ++i){
         var line = list[i].join(",");
         CSVRows.push(line);

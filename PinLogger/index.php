@@ -18,8 +18,8 @@ if(isMobileDevice()){ ?>
         <div id="titleBlock">
             <div id="title">A te PIN kódod: </div>
             <div id="pincode"></div>
-            <div class="request">Kérlek üsd be a kódot a bemeneti mezőbe</div>
-            <div class="request">Hibás bevitel esetén a kód törlődik és újra kell gépelni</div>
+            <div class="request">Kérlek gépeld be a kódot!</div>
+            <div class="request">Csak a helyes gépelések mentődnek.</div>
         </div>
         
         <div id="counterText">Még <div id="counter"></div> alkalommal kell helyesen beütnöd a kódot</div>
